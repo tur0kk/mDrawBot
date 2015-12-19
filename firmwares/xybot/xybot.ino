@@ -4,6 +4,8 @@
 #include <SoftwareSerial.h>
 #include <Wire.h>
 
+const char versionString[] = "1.0";
+
 // data stored in eeprom
 static union{
     struct{
@@ -224,6 +226,11 @@ void echoEndStop()
   Serial.println(digitalRead(ylimit_pin2));
 }
 
+void echoVersionString()
+{
+  Serial.println(versionString);
+}
+
 void syncRobotSetup()
 {
   int i;
@@ -319,6 +326,9 @@ void parseMcode(char * cmd)
       break;
     case 11:
       echoEndStop();
+      break;
+    case 115:
+      echoVersionString();
       break;
   }
 }

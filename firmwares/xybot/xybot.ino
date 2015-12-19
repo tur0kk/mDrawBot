@@ -4,7 +4,7 @@
 #include <SoftwareSerial.h>
 #include <Wire.h>
 
-const char versionString[] = "1.0";
+const char versionString[] = "Version1.0";
 
 // data stored in eeprom
 static union{
@@ -102,8 +102,13 @@ void doMove()
       cntA+=stepA;
       if(cntA>=1){
         d = dA>0?motorAfw:motorAbk;
+        if(roboSetup.data.motorSwitch == 0) {
+          stepperMoveA(d);
+        }
+        else {
+          stepperMoveB(d);
+        }
         posA+=(dA>0?1:-1);
-        stepperMoveA(d);
         cntA-=1;
       }
     }
@@ -112,8 +117,13 @@ void doMove()
       cntB+=stepB;
       if(cntB>=1){
         d = dB>0?motorBfw:motorBbk;
+        if(roboSetup.data.motorSwitch == 0) {
+          stepperMoveB(d);
+        }
+        else {
+          stepperMoveA(d);
+        }
         posB+=(dB>0?1:-1);
-        stepperMoveB(d);
         cntB-=1;
       }
     }
@@ -162,11 +172,21 @@ void goHome()
 {
   // stop on either endstop touches
   while(digitalRead(xlimit_pin2)==1 && digitalRead(xlimit_pin1)==1){
-    stepperMoveB(motorBbk);
+    if(roboSetup.data.motorSwitch == 0) {
+      stepperMoveB(motorBbk);
+    }
+    else {
+      stepperMoveA(motorAbk);
+    }
     delayMicroseconds(stepdelay_min);
   }
   while(digitalRead(ylimit_pin2)==1 && digitalRead(ylimit_pin1)==1){
-    stepperMoveA(motorAbk);
+    if(roboSetup.data.motorSwitch == 0) {
+      stepperMoveA(motorAbk);
+    }
+    else {
+      stepperMoveB(motorBbk);
+    }
     delayMicroseconds(stepdelay_min);
   }
   posA = 0;

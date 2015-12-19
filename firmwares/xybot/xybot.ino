@@ -102,11 +102,13 @@ void doMove()
       cntA+=stepA;
       if(cntA>=1){
         d = dA>0?motorAfw:motorAbk;
-        if(roboSetup.data.motorSwitch == 0) {
-          stepperMoveA(d);
-        }
-        else {
-          stepperMoveB(d);
+        if(d>0 && digitalRead(ylimit_pin2)==1 || d<0 && digitalRead(ylimit_pin1)==1) {
+          if(roboSetup.data.motorSwitch == 0) {
+            stepperMoveA(d);
+          }
+          else {
+            stepperMoveB(d);
+          }
         }
         posA+=(dA>0?1:-1);
         cntA-=1;
@@ -117,11 +119,13 @@ void doMove()
       cntB+=stepB;
       if(cntB>=1){
         d = dB>0?motorBfw:motorBbk;
-        if(roboSetup.data.motorSwitch == 0) {
-          stepperMoveB(d);
-        }
-        else {
-          stepperMoveA(d);
+        if(d>0 && digitalRead(xlimit_pin2)==1 || d<0 && digitalRead(xlimit_pin1)==1) {
+          if(roboSetup.data.motorSwitch == 0) {
+            stepperMoveB(d);
+          }
+          else {
+            stepperMoveA(d);
+          }
         }
         posB+=(dB>0?1:-1);
         cntB-=1;

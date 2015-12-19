@@ -373,8 +373,8 @@ void initRobotSetup()
     roboSetup.data.height = HEIGHT;
     roboSetup.data.motorSwitch = 0;
     roboSetup.data.speed = 80;
-    roboSetup.data.penUpPos = 160;
-    roboSetup.data.penDownPos = 90;
+    roboSetup.data.penUpPos = 90;
+    roboSetup.data.penDownPos = 130;
     syncRobotSetup();
   }
   // init motor direction

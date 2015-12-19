@@ -118,7 +118,12 @@ void doMove()
       }
     }
     mDelay=constrain(mDelay+speedDiff,stepdelay_min,stepdelay_max)+stepAuxDelay;
-    delayMicroseconds(mDelay);
+    if(mDelay <= 16000) {
+      delayMicroseconds(mDelay);
+    }
+    else { // delayMicroseconds can only produce an accurate delay up to 16383 
+      delay(mDelay/1000);
+    }
     if((maxD-i)<((stepdelay_max-stepdelay_min)/SPEED_STEP)){
       speedDiff=SPEED_STEP;
     }

@@ -312,6 +312,7 @@ void parsePen(char * cmd)
   strtok_r(cmd, " ", &tmp);
   int pos = atoi(tmp);
   servoPen.write(pos);
+  delay(100);
 }
 
 void parsePenPosSetup(char * cmd)

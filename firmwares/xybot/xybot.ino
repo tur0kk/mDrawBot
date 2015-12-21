@@ -303,6 +303,7 @@ void parseLaserPower(char * cmd)
   strtok_r(cmd, " ", &tmp);
   int pwm = atoi(tmp);
   laser.run(pwm);
+  delay(100);
 }
 
 void parsePen(char * cmd)
